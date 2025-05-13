@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Randevu Detayları - Randevu ve Hasta Takip Sistemi</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.5/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container py-5">
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+            <h2>Randevu Detayları</h2>
+            <div>
+                <a th:href="@{/doctor/appointments}" class="btn btn-secondary me-2">Randevulara Dön</a>
+                <a th:href="@{/doctor/dashboard}" class="btn btn-secondary me-2">Doktor Paneli</a>
+                <a th:href="@{/home}" class="btn btn-secondary me-2">Ana Sayfa</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Mesajlar -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <!-- Randevu Bilgileri -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Randevu Bilgileri</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Randevu Tarihi:</strong> <span th:text="${#temporals.format(appointment.appointmentDateTime, 'dd/MM/yyyy')}"></span></p>
+                        <p><strong>Randevu Saati:</strong> <span th:text="${#temporals.format(appointment.appointmentDateTime, 'HH:mm')}"></span></p>
+                        <p><strong>Durum:</strong> 
+                            <span th:if="${appointment.status.name() == 'PENDING'}" class="badge bg-warning">Beklemede</span>
+                            <span th:if="${appointment.status.name() == 'APPROVED'}" class="badge bg-success">Onaylandı</span>
+                            <span th:if="${appointment.status.name() == 'REJECTED'}" class="badge bg-danger">Reddedildi</span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Hasta:</strong> <span th:text="${appointment.patient.firstName + ' ' + appointment.patient.lastName}"></span></p>
+                        <p><strong>Hasta E-posta:</strong> <span th:text="${appointment.patient.email}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Randevu Durumu Güncelleme Formu (Sadece bekleyen randevular için) -->
+        <div class="card mb-4" th:if="${appointment.status.name() == 'PENDING'}">
+            <div class="card-header bg-warning text-dark">
+                <h3 class="mb-0">Randevu Durumunu Güncelle</h3>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/doctor/appointment/{id}/status(id=${appointment.id})}" method="post" class="d-flex gap-2">
+                    <input type="hidden" name="status" value="APPROVED">
+                    <button type="submit" class="btn btn-success flex-grow-1">Randevuyu Onayla</button>
+                </form>
+                
+                <hr>
+                
+                <form th:action="@{/doctor/appointment/{id}/status(id=${appointment.id})}" method="post" class="d-flex gap-2">
+                    <input type="hidden" name="status" value="REJECTED">
+                    <button type="submit" class="btn btn-danger flex-grow-1">Randevuyu Reddet</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Doktor Notları (Sadece onaylanmış randevular için) -->
+        <div class="card" th:if="${appointment.status.name() == 'APPROVED'}">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0">Doktor Notları</h3>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/doctor/appointment/{id}/notes(id=${appointment.id})}" method="post">
+                    <div class="mb-3">
+                        <label for="doctorNotes" class="form-label">Notlar</label>
+                        <textarea id="doctorNotes" name="doctorNotes" class="form-control" rows="5" th:text="${appointment.doctorNotes}"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Notları Kaydet</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Randevu Reddedildi Bilgisi -->
+        <div class="alert alert-danger" th:if="${appointment.status.name() == 'REJECTED'}">
+            <h4 class="alert-heading">Randevu Reddedildi!</h4>
+            <p>Bu randevu tarafınızdan reddedilmiştir.</p>
+        </div>
+    </div>
+    <script src="/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

@@ -1,0 +1,16 @@
+Gereksinimler:
+1.	Randevu ve Hasta Takip Sistemi için back-end geliştirmeniz gerekmektedir. 
+2.	Randevu ve Hasta Takip Sisteminin Temel Özellikleri:
+2.1. Kullanıcı Rolleri
+•	Hasta: Kayıt olur, giriş yapar, randevu alır, geçmiş randevularını görür.
+•	Doktor: Giriş yapar, kendisine gelen randevuları görür, onaylar veya reddeder, not ekler.
+2.2. Randevu Sistemi
+•	Randevu tarihi ve saati seçimi.
+•	Aynı saatte çakışan randevuların engellenmesi.
+•	Randevunun durumları: Beklemede, Onaylandı, Reddedildi.
+2.3. Hasta Takibi
+•	Doktorlar randevulara özel not ekleyebilir.
+•	Hasta geçmiş randevularını ve doktor notlarını görebilir.
+3.	Servlet/JSP dışında bir framework (Spring veya Play) kullanmanız gerekmektedir.
+4.	Front-end kısmı basit ve minimum seviyede (HTML ve CSS) olabilir. 
+5.	Veritabanı bağlantısı olmalıdır ve listelenen ürünler/varlıklar veritabanından alınıp sayfalar dinamik olarak oluşturulmalıdır. Ayrıca kullanıcının gönderdiği veriler veritabanına kayıt edilmelidir.

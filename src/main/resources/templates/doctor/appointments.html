@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Randevularım - Randevu ve Hasta Takip Sistemi</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.5/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container py-5">
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+            <h2>Doktor Randevuları</h2>
+            <div>
+                <a th:href="@{/doctor/dashboard}" class="btn btn-secondary me-2">Doktor Paneli</a>
+                <a th:href="@{/home}" class="btn btn-secondary me-2">Ana Sayfa</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Mesajlar -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <!-- Butonlar -->
+        <div class="mb-4">
+            <a th:href="@{/doctor/today-appointments}" class="btn btn-primary me-2">Bugünkü Randevular</a>
+            <a th:href="@{/doctor/appointments}" class="btn btn-success">Tüm Randevular</a>
+        </div>
+        
+        <!-- Bekleyen Randevular -->
+        <div class="card mb-4">
+            <div class="card-header bg-warning text-dark">
+                <h3 class="mb-0">Bekleyen Randevular</h3>
+            </div>
+            <div class="card-body">
+                <div th:if="${#lists.isEmpty(pendingAppointments)}" class="alert alert-info">
+                    Bekleyen randevunuz bulunmamaktadır.
+                </div>
+                
+                <div th:unless="${#lists.isEmpty(pendingAppointments)}" class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Saat</th>
+                                <th>Hasta</th>
+                                <th>Durum</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="appointment : ${pendingAppointments}">
+                                <td th:text="${#temporals.format(appointment.appointmentDateTime, 'dd/MM/yyyy')}"></td>
+                                <td th:text="${#temporals.format(appointment.appointmentDateTime, 'HH:mm')}"></td>
+                                <td th:text="${appointment.patient.firstName + ' ' + appointment.patient.lastName}"></td>
+                                <td>
+                                    <span class="badge bg-warning">Beklemede</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/doctor/appointment/{id}(id=${appointment.id})}" class="btn btn-sm btn-info text-white">Detaylar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tüm Randevular -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Tüm Randevular</h3>
+            </div>
+            <div class="card-body">
+                <div th:if="${#lists.isEmpty(allAppointments)}" class="alert alert-info">
+                    Henüz randevunuz bulunmamaktadır.
+                </div>
+                
+                <div th:unless="${#lists.isEmpty(allAppointments)}" class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Saat</th>
+                                <th>Hasta</th>
+                                <th>Durum</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="appointment : ${allAppointments}">
+                                <td th:text="${#temporals.format(appointment.appointmentDateTime, 'dd/MM/yyyy')}"></td>
+                                <td th:text="${#temporals.format(appointment.appointmentDateTime, 'HH:mm')}"></td>
+                                <td th:text="${appointment.patient.firstName + ' ' + appointment.patient.lastName}"></td>
+                                <td>
+                                    <span th:if="${appointment.status.name() == 'PENDING'}" class="badge bg-warning">Beklemede</span>
+                                    <span th:if="${appointment.status.name() == 'APPROVED'}" class="badge bg-success">Onaylandı</span>
+                                    <span th:if="${appointment.status.name() == 'REJECTED'}" class="badge bg-danger">Reddedildi</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/doctor/appointment/{id}(id=${appointment.id})}" class="btn btn-sm btn-info text-white">Detaylar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Randevu Al - Randevu ve Hasta Takip Sistemi</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.5/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container py-5">
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+            <h2>Yeni Randevu Al</h2>
+            <div>
+                <a th:href="@{/patient/appointments}" class="btn btn-secondary me-2">Randevularım</a>
+                <a th:href="@{/patient/dashboard}" class="btn btn-secondary me-2">Hasta Paneli</a>
+                <a th:href="@{/home}" class="btn btn-secondary me-2">Ana Sayfa</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Mesajlar -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <!-- Randevu Formu -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Randevu Bilgileri</h3>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/patient/book-appointment}" method="post">
+                    <div class="mb-3">
+                        <label for="doctorId" class="form-label">Doktor</label>
+                        <select id="doctorId" name="doctorId" class="form-select" required>
+                            <option value="">-- Doktor Seçin --</option>
+                            <option th:each="doctor : ${doctors}" 
+                                    th:value="${doctor.id}" 
+                                    th:text="${doctor.firstName + ' ' + doctor.lastName}">
+                            </option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="appointmentDate" class="form-label">Randevu Tarihi</label>
+                        <input type="date" id="appointmentDate" name="appointmentDate" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="appointmentTime" class="form-label">Randevu Saati</label>
+                        <select id="appointmentTime" name="appointmentTime" class="form-select" required>
+                            <option value="">-- Saat Seçin --</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Randevu Oluştur</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

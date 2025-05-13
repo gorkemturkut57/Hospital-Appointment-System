@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Doktor Paneli - Randevu ve Hasta Takip Sistemi</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.5/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container py-5">
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+            <h2>Doktor Paneli</h2>
+            <div>
+                <a th:href="@{/home}" class="btn btn-secondary me-2">Ana Sayfa</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Çıkış Yap</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="alert alert-success mb-4">
+            <h4>Hoş geldiniz, Dr. <span sec:authentication="principal.fullName"></span>!</h4>
+            <p>Buradan randevularınızı yönetebilir ve hasta notlarını düzenleyebilirsiniz.</p>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Bugünkü Randevularınız</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Bugün için planlanmış randevularınızı görüntüleyin.</p>
+                        <p>Bugünkü hastaların bilgilerini ve randevu saatlerini kontrol edin.</p>
+                        <a th:href="@{/doctor/today-appointments}" class="btn btn-primary">Bugünkü Randevular</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header bg-success text-white">
+                        <h3 class="mb-0">Tüm Randevularınız</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Geçmiş ve gelecek tüm randevularınızı görüntüleyin.</p>
+                        <p>Randevuları onaylayın veya reddedin. Hasta notlarını yönetin.</p>
+                        <a th:href="@{/doctor/appointments}" class="btn btn-success">Tüm Randevular</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Doktor Bilgileri -->
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h3 class="mb-0">Hasta Takip Bilgileri</h3>
+            </div>
+            <div class="card-body">
+                <p>Hasta takip sistemi hakkında bilmeniz gerekenler:</p>
+                <ul>
+                    <li>Yeni randevu istekleri "Beklemede" durumunda size gelir.</li>
+                    <li>Randevuları onaylayabilir veya reddedebilirsiniz.</li>
+                    <li>Onayladığınız randevulara özel notlar ekleyebilirsiniz.</li>
+                    <li>Eklediğiniz notlar hastalar tarafından görüntülenebilir.</li>
+                    <li>Hasta geçmişini takip ederek daha iyi tedavi planlaması yapabilirsiniz.</li>
+                </ul>
+                <div class="alert alert-info">
+                    <strong>İpucu:</strong> Hasta notlarını detaylı tutarak tedavi sürecini daha verimli yönetebilirsiniz.
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

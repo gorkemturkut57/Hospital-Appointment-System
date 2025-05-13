@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Kullanıcı Listesi - Randevu ve Hasta Takip Sistemi</title>
+	<link rel="stylesheet" href="/webjars/bootstrap/5.3.5/css/bootstrap.min.css" />
+</head>
+<body>
+	<div class="container py-5">
+		<div class="mb-4 d-flex justify-content-between align-items-center">
+			<h2>Kullanıcı Listesi</h2>
+			<div>
+				<a th:href="@{/home}" class="btn btn-secondary me-2">Ana Sayfa</a>
+				<form th:action="@{/logout}" method="post" class="d-inline">
+					<button type="submit" class="btn btn-danger">Çıkış Yap</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h3 class="mb-0">Tüm Kullanıcılar</h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>E-posta</th>
+							<th>Ad</th>
+							<th>Soyad</th>
+							<th>Roller</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="user: ${users}">
+							<td th:text="${user.id}"></td>
+							<td th:text="${user.email}"></td>
+							<td th:text="${user.firstName}"></td>
+							<td th:text="${user.lastName}"></td>
+							<td>
+								<span th:each="role, iterStat : ${user.roles}" 
+									  th:text="${role.name} + ${!iterStat.last ? ', ' : ''}">
+								</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

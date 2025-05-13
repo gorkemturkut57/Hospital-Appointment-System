@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Ana Sayfa - Randevu ve Hasta Takip Sistemi</title>
+	<link rel="stylesheet" href="/webjars/bootstrap/5.3.5/css/bootstrap.min.css" />
+</head>
+<body>
+	<div class="container py-5">
+		<div class="row mb-5">
+			<div class="col-md-8 offset-md-2 text-center">
+				<h1 class="display-4 mb-3">Randevu ve Hasta Takip Sistemi</h1>
+				<p class="lead">
+					Online randevu oluşturabilir, doktor görüşmelerinizi takip edebilirsiniz.
+				</p>
+				<div class="mt-4">
+					<a th:href="@{/login}" class="btn btn-primary btn-lg me-2">Giriş Yap</a>
+					<a th:href="@{/register}" class="btn btn-success btn-lg">Hasta Kaydı</a>
+					<a th:href="@{/register_doctor}" class="btn btn-info btn-lg ms-2 text-white">Doktor Kaydı</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card h-100">
+					<div class="card-body text-center">
+						<h3 class="card-title">Hasta Girişi</h3>
+						<p class="card-text">
+							Hesabınıza giriş yaparak kolayca randevu alabilir ve geçmiş randevularınızı görüntüleyebilirsiniz.
+						</p>
+						<a th:href="@{/login}" class="btn btn-primary">Giriş Yap</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4">
+				<div class="card h-100">
+					<div class="card-body text-center">
+						<h3 class="card-title">Hasta Kaydı</h3>
+						<p class="card-text">
+							Hızlı bir şekilde kayıt olarak hemen randevu almaya başlayabilirsiniz.
+						</p>
+						<a th:href="@{/register}" class="btn btn-success">Hasta Kaydı</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4">
+				<div class="card h-100">
+					<div class="card-body text-center">
+						<h3 class="card-title">Doktor Kaydı</h3>
+						<p class="card-text">
+							Doktorlar için özel kayıt formunu kullanarak sisteme katılabilirsiniz.
+						</p>
+						<a th:href="@{/register_doctor}" class="btn btn-info text-white">Doktor Kaydı</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
