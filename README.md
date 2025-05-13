@@ -1,7 +1,3 @@
-İşte projen için daha şık, detaylı ve iyi yapılandırılmış bir İngilizce README örneği. Markdown yapısı net, bölümler iyi ayrılmış ve açıklayıcı ikonlar ile görsel çekicilik artırılmıştır.
-
----
-
 # 🏥 Hospital Appointment & Patient Tracking System
 
 A **Spring Boot-based web application** designed to manage hospital appointments and patient follow-up. It allows patients to schedule appointments and doctors to manage them with detailed tracking.
